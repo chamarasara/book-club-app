@@ -7,20 +7,20 @@ const authorsRoutes: FastifyPluginAsync = async (app) => {
     return prisma.author.findMany({ include: { books: true } });
   });
 
-  app.get('/:id', { schema: { params: AuthorParamsSchema } }, async (req, reply) => {
+  app.get('/:id', async (req, reply) => {
     const id = Number((req.params as any).id);
     const author = await prisma.author.findUnique({ where: { id }, include: { books: true } });
     if (!author) return reply.code(404).send({ message: 'Author not found' });
     return author;
   });
 
-  app.post('/', { schema: { body: AuthorCreateSchema } }, async (req, reply) => {
+  app.post('/', async (req, reply) => {
     const data = req.body as any;
     const created = await prisma.author.create({ data });
     return reply.code(201).send(created);
   });
 
-  app.put('/:id', { schema: { params: AuthorParamsSchema, body: AuthorUpdateSchema } }, async (req, reply) => {
+  app.put('/:id', async (req, reply) => {
     const id = Number((req.params as any).id);
     try {
       const updated = await prisma.author.update({ where: { id }, data: req.body as any });
@@ -30,7 +30,7 @@ const authorsRoutes: FastifyPluginAsync = async (app) => {
     }
   });
 
-  app.delete('/:id', { schema: { params: AuthorParamsSchema } }, async (req, reply) => {
+  app.delete('/:id', async (req, reply) => {
     const id = Number((req.params as any).id);
     try {
       await prisma.author.delete({ where: { id } });

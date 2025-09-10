@@ -1,7 +1,7 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import formBody from '@fastify/formbody';
-import { ZodTypeProvider } from '@fastify/type-provider-zod';
+import { ZodTypeProvider } from 'fastify-type-provider-zod';
 import * as dotenv from 'dotenv';
 import authorsRoutes from './routes/authors.js';
 import booksRoutes from './routes/books.js';
